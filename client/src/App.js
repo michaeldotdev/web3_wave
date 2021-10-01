@@ -15,8 +15,8 @@ function App() {
   //copy artifact content to utils/json - create varible
   const contractABI = abi;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getAllFistBumps = async () => {
-    console.log('line 19, getting all fistbumps')
     try {
       const { ethereum } = window;
       if (ethereum) {
@@ -59,7 +59,6 @@ function App() {
         const account = accounts[0];
         console.log("Found an authorized account:", account);
         setCurrentAccount(account);
-        getAllFistBumps();
       } else {
         console.log("No authorized account found");
       }
@@ -118,6 +117,12 @@ function App() {
   useEffect(() => {
     checkWallet()
   }, [])
+
+  useEffect(() => {
+    if (currentAccount) {
+      getAllFistBumps()
+    }
+  }, [currentAccount, getAllFistBumps])
 
   return (
     <div className="mainContainer">
