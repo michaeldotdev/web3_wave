@@ -4,7 +4,6 @@ import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [totalFistBumps, setTotalFistBumps] = useState(0)
   const [currentAccount, setCurrentAccount] = useState("");
 
   //After smart contract deployment, variable to hold contract address
@@ -62,7 +61,6 @@ function App() {
         const fistBumpContract = new ethers.Contract(contractAddress, contractABI, signer);
 
         let count = await fistBumpContract.getTotalfistBumps();
-        setTotalFistBumps(count);
         console.log("Retrieve total fistBump count...", count.toNumber());
 
         const fistBumpTxn = await fistBumpContract.fistBump();
