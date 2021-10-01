@@ -5,17 +5,38 @@ import "hardhat/console.sol";
 contract FistBumpPortal {
     uint256 fistBumpCounts;
 
+    //solidity event
+    event NewFistBump(address indexed from, uint256 timestamp, string message);
+
+    //solidity struct - custom datatype
+    struct FistBump {
+        address fistBumpFrom; // address of user who fistbump'd
+        string message; // message from user
+        uint256 timestamp; // time of when user fistbump'd
+    }
+
+    //variable fistbumps that allows storing of array of structs
+    FistBump[] fistbumps;
+
     constructor() {
         console.log("Yo! This is the first smart contract!");
     }
 
-    function fistBump() public {
+    function fistBump(string memory _message) public {
         fistBumpCounts += 1;
         console.log("%s has fistbump'd!", msg.sender);
+
+        //stores data into array on line 19
+        fistbumps.push(FistBump(msg.sender, _message, block.timestamp));
+
+        emit NewFistBump(msg.sender, block.timestamp, _message);
     }
 
-    function getTotalfistBumps() public view returns (uint256) {
-        console.log("There are %d total fistbumps!", fistBumpCounts);
+    function getAllFistBumps() public view returns (FistBump[] memory) {
+        return fistbumps;
+    }
+
+    function getTotalFistBumps() public view returns (uint256) {
         return fistBumpCounts;
     }
 }

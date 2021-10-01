@@ -8,18 +8,19 @@ const main = async () => {
   console.log("Contract deployed by:", owner.address);
 
   let fistBumpsTotal;
-  fistBumpsTotal = await fistBumpContract.getTotalfistBumps();
+  fistBumpsTotal = await fistBumpContract.getTotalFistBumps();
+  console.log(fistBumpsTotal.toNumber());
 
   //fistBumpTransaction
-  let fistBumpTxn = await fistBumpContract.fistBump();
+  let fistBumpTxn = await fistBumpContract.fistBump("A message!");
+  await fistBumpTxn.wait(); // waiting to be mined
+
+  const [_, randoPerson] = await ethers.getSigners();
+  fistBumpTxn = await fistBumpContract.connect(randoPerson).fistBump("Another message!");
   await fistBumpTxn.wait();
 
-  fistBumpsTotal = await fistBumpContract.getTotalfistBumps();
-
-  fistBumpTxn = await fistBumpContract.connect(randomPerson).fistBump();
-  await fistBumpTxn.wait();
-
-  fistBumpsTotal = await fistBumpContract.getTotalfistBumps();
+  let allFistBumps = await fistBumpContract.getAllFistBumps();
+  console.log(allFistBumps);
 }
 
 const runMain = async () => {
