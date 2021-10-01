@@ -6,8 +6,8 @@ function App() {
     const { ethereum } = window;
 
     ethereum
-      ? console.log("Make sure your wallet is connected!")
-      : console.log("Wallet is connected!", ethereum);
+      ? console.log("Wallet is connected!", ethereum)
+      : console.log("Make sure your wallet is connected!");
   }
 
   const wave = () => {
@@ -26,8 +26,8 @@ function App() {
         </div>
 
         <div className="bio">
-          I am Michael and I recent got interested in Web3 and NFTs!
-          Connect your Ethereum Wallet and fistbump!
+          <h4>I am Michael and I recently got interested in Web3, building with Solidity and Ethereum</h4>
+          <h4>Connect your Ethereum Wallet and fistbump!</h4>
         </div>
 
         <button className="waveButton" onClick={wave}>
