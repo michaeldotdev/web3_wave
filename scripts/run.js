@@ -1,23 +1,29 @@
 const main = async () => {
-  const [owner, randomPerson] = await hre.ethers.getSigners();
   const fistBumpContractFactory = await hre.ethers.getContractFactory('FistBumpPortal');
-  const fistBumpContract = await fistBumpContractFactory.deploy();
+  const fistBumpContract = await fistBumpContractFactory.deploy({
+    value: hre.ethers.utils.parseEther("0.1")
+  });
   await fistBumpContract.deployed();
-
   console.log("Contract deployed to:", fistBumpContract.address);
-  console.log("Contract deployed by:", owner.address);
 
-  let fistBumpsTotal;
-  fistBumpsTotal = await fistBumpContract.getTotalFistBumps();
-  console.log(fistBumpsTotal.toNumber());
+  // Get contract balance
+  let contractBalance = await hre.ethers.provider.getBalance(
+    fistBumpContract.address
+  );
+  console.log(
+    'Contract Balance:',
+    hre.ethers.utils.formatEther(contractBalance)
+  );
 
-  //fistBumpTransaction
-  let fistBumpTxn = await fistBumpContract.fistBump("A message!");
+  //fistBumpTransaction - to fistbump!
+  let fistBumpTxn = await fistBumpContract.fistBump("A message!", "a link!");
   await fistBumpTxn.wait(); // waiting to be mined
 
-  const [_, randoPerson] = await ethers.getSigners();
-  fistBumpTxn = await fistBumpContract.connect(randoPerson).fistBump("Another message!");
-  await fistBumpTxn.wait();
+  contractBalance = await hre.ethers.provider.getBalance(fistBumpContract.address);
+  console.log(
+    'Contract balance:',
+    hre.ethers.utils.formatEther(contractBalance)
+  );
 
   let allFistBumps = await fistBumpContract.getAllFistBumps();
   console.log(allFistBumps);

@@ -24,7 +24,7 @@ contract FistBumpPortal {
     //variable fistbumps that allows storing of array of structs
     FistBump[] fistbumps;
 
-    constructor() {
+    constructor() payable {
         console.log("Yo! This is the first smart contract!");
     }
 
@@ -36,6 +36,14 @@ contract FistBumpPortal {
         fistbumps.push(FistBump(msg.sender, _message, _link, block.timestamp));
 
         emit NewFistBump(msg.sender, block.timestamp, _message, _link);
+
+        uint256 prizeAmount = 0.0001 ether;
+        require(
+            prizeAmount <= address(this).balance,
+            "Trying to withdraw more money than the contract has."
+        );
+        (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+        require(success, "Failed to withdraw moneny from contract.");
     }
 
     function getAllFistBumps() public view returns (FistBump[] memory) {

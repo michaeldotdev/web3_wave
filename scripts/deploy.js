@@ -1,14 +1,12 @@
 const main = async () => {
-  const [deployer] = await hre.ethers.getSigners();
-  const accountBalance = await deployer.getBalance();
+  const fistBumpContractFactory = await hre.ethers.getContractFactory('FistBumpPortal');
+  const fistBumpContract = await fistBumpContractFactory.deploy({
+    value: hre.ethers.utils.parseEther("0.001"),
+  });
 
-  console.log("Deploying contracts with account: ", deployer.address);
-  console.log("Account balance: ", accountBalance.toString());
+  await fistBumpContract.deployed();
 
-  const Token = await hre.ethers.getContractFactory('FistBumpPortal');
-  const portal = await Token.deploy();
-
-  console.log('FistBumpPortal address: ', portal.address);
+  console.log('FistBumpPortal address: ', fistBumpContract.address);
 }
 
 const runMain = async () => {
