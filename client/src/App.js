@@ -1,8 +1,17 @@
+import { abi } from "./utils/FistBumpPortal.json";
 import './App.css';
+import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 
 function App() {
+  const [totalFistBumps, setTotalFistBumps] = useState(0)
   const [currentAccount, setCurrentAccount] = useState("");
+
+  //After smart contract deployment, variable to hold contract address
+  const contractAddress = "0x9791d38F03A724F488dAC3a1F1393d90aefBdBFa";
+
+  //copy artifact content to utils/json - create varible
+  const contractABI = abi;
 
   const checkWallet = async () => {
     const { ethereum } = window;
@@ -43,8 +52,34 @@ function App() {
   }
 
 
-  const wave = () => {
+  const fistBump = async () => {
+    try {
+      const { ethereum } = window;
 
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const fistBumpContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        let count = await fistBumpContract.getTotalfistBumps();
+        setTotalFistBumps(count);
+        console.log("Retrieve total fistBump count...", count.toNumber());
+
+        const fistBumpTxn = await fistBumpContract.fistBump();
+        console.log('Mining...', fistBumpTxn.hash);
+
+        await fistBumpTxn.wait();
+        console.log("Mined -- ", fistBumpTxn.hash);
+
+        count = await fistBumpContract.getTotalfistBumps();
+        console.log("Retrieve total fistbump count...", count.toNumber());
+
+      } else {
+        console.log("Ethereum object does not exist!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
@@ -63,7 +98,7 @@ function App() {
           <h4>Connect your Ethereum Wallet and fistbump!</h4>
         </div>
 
-        <button className="waveButton" onClick={wave}>
+        <button className="waveButton" onClick={fistBump}>
           Bump it! 🤛🏼
         </button>
         {!currentAccount && (
