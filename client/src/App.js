@@ -6,11 +6,11 @@ import React, { useEffect, useState } from 'react';
 function App() {
   const [allFistBumps, setAllFistBumps] = useState([]);
   const [currentAccount, setCurrentAccount] = useState("");
-
-
+  const [message, setMessage] = useState("");
+  const [songLink, setSongLink] = useState("");
 
   //After smart contract deployment, variable to hold contract address
-  const contractAddress = "0x09a9438C25338C4fbB3366904dF1b395E926E981";
+  const contractAddress = "0x18e37CE7ae54A60C11022d3110617e9a4B46bB52";
 
   //copy artifact content to utils/json - create varible
   const contractABI = abi;
@@ -32,8 +32,9 @@ function App() {
         fistBumps.forEach(fistBump => {
           filterFistBumps.push({
             address: fistBump.fistBumpFrom,
+            message: fistBump.message,
+            link: fistBump.link,
             timestamp: new Date(fistBump.timestamp * 1000),
-            message: fistBump.message
           });
         });
 
@@ -97,7 +98,7 @@ function App() {
         let count = await fistBumpContract.getTotalFistBumps();
         console.log("Retrieve total fistBump count...", count.toNumber());
 
-        const fistBumpTxn = await fistBumpContract.fistBump('this is a message');
+        const fistBumpTxn = await fistBumpContract.fistBump(message, songLink);
         console.log('Mining...', fistBumpTxn.hash);
 
         await fistBumpTxn.wait();
@@ -136,21 +137,55 @@ function App() {
           <h4>Connect your Ethereum Wallet and fistbump!</h4>
         </div>
 
-        <button className="waveButton" onClick={fistBump}>
-          Bump it! 🤛🏼
-        </button>
+        {currentAccount && (
+          <form action="">
+            <div>
+              <textarea
+                className="messageBox"
+                id="message"
+                name="message"
+                onChange={event => setMessage(event.target.value)}
+                placeholder="Please leave me a message!"
+                required>
+              </textarea>
+            </div>
+
+            <div>
+              <input
+                className="linkInput"
+                id="songLink"
+                name="songLink"
+                onChange={event => setSongLink(event.target.value)}
+                placeholder="Please link your favorite song!"
+                type="url"
+                required
+              />
+            </div>
+          </form>
+        )}
+
+        {currentAccount && (
+          <button className="fistBumpButton" onClick={fistBump}>
+            Bump it! 🤛🏼
+          </button>
+        )}
+
         {!currentAccount && (
-          <button className="waveButton" onClick={connectWallet}>
+          <button className="fistBumpButton" onClick={connectWallet}>
             Connect MetaMask Wallet
           </button>
         )}
 
+        <h2>People who already fistbump'd!</h2>
+
+
         {allFistBumps.map((fistBump, index) => {
           return (
-            <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
+            <div className="message" key={index}>
+              <div>Message: {fistBump.message}</div>
+              <div>Song Link: {fistBump.link}</div>
               <div>Address: {fistBump.address}</div>
               <div>Time: {fistBump.timestamp.toString()}</div>
-              <div>Message: {fistBump.message}</div>
             </div>
           )
         })}

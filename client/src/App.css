@@ -3,9 +3,10 @@
   font-weight: 600;
   margin-top: 16px;
   text-align: center;
+  text-shadow: 2px 3px 0px #898999;
 }
 
-html {
+body {
   background-image: linear-gradient(
     to right bottom,
     #d16ba5,
@@ -21,7 +22,7 @@ html {
     #46eefa,
     #5ffbf1
   );
-  height: 100%;
+  height: 100vh;
   margin: 0;
 }
 
@@ -37,11 +38,42 @@ h1 {
   color: #fff;
 }
 
+h2 {
+  color: #fff;
+  margin-top: 48px;
+  text-align: center;
+  text-shadow: 2px 3px 0px #898999;
+}
+
 .header {
   font-size: 28px;
   font-weight: 600;
   text-align: center;
   text-shadow: 2px 3px 0px #898999;
+}
+
+.linkInput {
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  height: 30px;
+  margin-bottom: 32px; 
+  margin-top: 20px;
+  outline: none;
+  width: 590px;
+}
+
+input::placeholder{
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  opacity: 1;
+  text-align: center;
+  text-shadow: 1px 1.5px 0px #898999;
 }
 
 .mainContainer {
@@ -51,10 +83,47 @@ h1 {
   width: 100%;
 }
 
-.waveButton {
+.message {
+  background-color:transparent;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 5px; 
+  padding: 8px;
+  text-shadow: 1px 1.5px 0px #898999;
+}
+
+.messageBox {
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  height: 100px;
+  outline: none;
+  resize: none;
+  width: 590px;
+}
+
+textarea::placeholder {
+  color: #fff;
+  font-size: 18px;
+  line-height: 100px;
+  opacity: 1;
+  text-align: center;
+  text-shadow: 1px 1.5px 0px #898999;
+}
+
+.fistBumpButton {
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
   cursor: pointer;
   margin-top: 16px;
   padding: 8px;
-  border: 0;
-  border-radius: 5px;
 }
