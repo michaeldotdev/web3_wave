@@ -1,14 +1,30 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function App() {
-  const checkWallet = () => {
-    const { ethereum } = window;
+  const [currentAccount, setCurrentAccount] = useState("");
 
-    ethereum
-      ? console.log("Wallet is connected!", ethereum)
-      : console.log("Make sure your wallet is connected!");
+  const checkWallet = async () => {
+    const { ethereum } = window;
+    try {
+      !ethereum
+        ? console.log("Make sure your MetaMask wallet is connected!")
+        : console.log("MetaMask Wallet is connected!", ethereum);
+
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+
+      if (accounts.length !== 0) {
+        const account = accounts[0];
+        console.log("Found an authorized account:", account);
+        setCurrentAccount(account);
+      } else {
+        console.log("No authorized account found");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
+
 
   const wave = () => {
 
