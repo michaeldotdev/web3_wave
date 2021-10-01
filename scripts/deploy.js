@@ -5,10 +5,10 @@ const main = async () => {
   console.log("Deploying contracts with account: ", deployer.address);
   console.log("Account balance: ", accountBalance.toString());
 
-  const Token = await hre.ethers.getContractFactory('WavePortal');
+  const Token = await hre.ethers.getContractFactory('FistBumpPortal');
   const portal = await Token.deploy();
 
-  console.log('WavePortal address: ', portal.address);
+  console.log('FistBumpPortal address: ', portal.address);
 }
 
 const runMain = async () => {

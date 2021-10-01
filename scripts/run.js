@@ -1,25 +1,25 @@
 const main = async () => {
   const [owner, randomPerson] = await hre.ethers.getSigners();
-  const waveContractFactory = await hre.ethers.getContractFactory('WavePortal');
-  const waveContract = await waveContractFactory.deploy();
-  await waveContract.deployed();
+  const fistBumpContractFactory = await hre.ethers.getContractFactory('FistBumpPortal');
+  const fistBumpContract = await fistBumpContractFactory.deploy();
+  await fistBumpContract.deployed();
 
-  console.log("Contract deployed to:", waveContract.address);
+  console.log("Contract deployed to:", fistBumpContract.address);
   console.log("Contract deployed by:", owner.address);
 
-  let numberOfWaves;
-  numberOfWaves = await waveContract.getTotalWaves();
+  let fistBumpsTotal;
+  fistBumpsTotal = await fistBumpContract.getTotalfistBumps();
 
-  //waveTransaction
-  let waveTxn = await waveContract.wave();
-  await waveTxn.wait();
+  //fistBumpTransaction
+  let fistBumpTxn = await fistBumpContract.fistBump();
+  await fistBumpTxn.wait();
 
-  numberOfWaves = await waveContract.getTotalWaves();
+  fistBumpsTotal = await fistBumpContract.getTotalfistBumps();
 
-  waveTxn = await waveContract.connect(randomPerson).wave();
-  await waveTxn.wait();
+  fistBumpTxn = await fistBumpContract.connect(randomPerson).fistBump();
+  await fistBumpTxn.wait();
 
-  numberOfWaves = await waveContract.getTotalWaves();
+  fistBumpsTotal = await fistBumpContract.getTotalfistBumps();
 }
 
 const runMain = async () => {
