@@ -16,8 +16,11 @@ const main = async () => {
   );
 
   //fistBumpTransaction - to fistbump!
-  let fistBumpTxn = await fistBumpContract.fistBump("A message!", "a link!");
+  let fistBumpTxn = await fistBumpContract.fistBump("This is fistbump 1", "a link!");
   await fistBumpTxn.wait(); // waiting to be mined
+
+  let fistBumpTxn2 = await fistBumpContract.fistBump("This is fistbump 2", "a link!");
+  await fistBumpTxn2.wait(); // waiting to be mined
 
   contractBalance = await hre.ethers.provider.getBalance(fistBumpContract.address);
   console.log(
@@ -25,8 +28,8 @@ const main = async () => {
     hre.ethers.utils.formatEther(contractBalance)
   );
 
-  let allFistBumps = await fistBumpContract.getAllFistBumps();
-  console.log(allFistBumps);
+  // let allFistBumps = await fistBumpContract.getAllFistBumps();
+  // console.log(allFistBumps);
 }
 
 const runMain = async () => {

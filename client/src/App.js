@@ -10,7 +10,7 @@ function App() {
   const [songLink, setSongLink] = useState("");
 
   //After smart contract deployment, variable to hold contract address
-  const contractAddress = "0x331b936B14c5222A72E6943d52c632d91B51ecb8";
+  const contractAddress = "0x26C11BAdEFcBA76606Bd55A04040d5C70BD727B9";
 
   //copy artifact content to utils/json - create varible
   const contractABI = abi;
